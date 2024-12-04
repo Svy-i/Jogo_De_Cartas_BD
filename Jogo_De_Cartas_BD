@@ -1,0 +1,62 @@
+CREATE TABLE Carta
+(
+  nomeCarta VARCHAR (30) NOT NULL,
+  custo INT NOT NULL,
+  descricao VARCHAR (50) NOT NULL,
+  dano INT,
+  compra INT,
+  defesa INT,
+  idCarta INT NOT NULL,
+  PRIMARY KEY (idCarta)
+);
+
+CREATE TABLE Jogador
+(
+  idJogador INT NOT NULL,
+  partidasConcluidas INT NOT NULL,
+  nomeJogador VARCHAR (16) NOT NULL,
+  PRIMARY KEY (idJogador)
+);
+
+CREATE TABLE Personagem
+(
+  idPersonagem INT NOT NULL,
+  nomePersonagem VARCHAR (20) NOT NULL,
+  classe VARCHAR (20) NOT NULL,
+  vidaPersonagem INT NOT NULL,
+  energia INT NOT NULL,
+  idJogador INT NOT NULL,
+  PRIMARY KEY (idPersonagem),
+  FOREIGN KEY (idJogador) REFERENCES Jogador(idJogador)
+);
+
+CREATE TABLE Inimigo
+(
+  idInimigo INT NOT NULL,
+  nomeInimigo VARCHAR (30) NOT NULL,
+  vidaInimigo INT NOT NULL,
+  ataqueInimigo INT NOT NULL,
+  PRIMARY KEY (idInimigo)
+);
+
+CREATE TABLE Baralho
+(
+  idBaralho INT NOT NULL,
+  deck VARCHAR (50) NOT NULL,
+  maos VARCHAR (50) NOT NULL,
+  idCarta INT NOT NULL,
+  PRIMARY KEY (idBaralho),
+  FOREIGN KEY (idCarta) REFERENCES Carta(idCarta)
+);
+
+CREATE TABLE Partida
+(
+  idPartida INT NOT NULL,
+  idInimigo INT NOT NULL,
+  idPersonagem INT NOT NULL,
+  idBaralho INT NOT NULL,
+  PRIMARY KEY (idPartida),
+  FOREIGN KEY (idInimigo) REFERENCES Inimigo(idInimigo),
+  FOREIGN KEY (idPersonagem) REFERENCES Personagem(idPersonagem),
+  FOREIGN KEY (idBaralho) REFERENCES Baralho(idBaralho)
+);
